@@ -2,66 +2,96 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Valentine 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Valentine 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 
 <style>
-*{
-  font-family:"Comic Sans MS",cursive;
-  box-sizing:border-box;
-}
-
+*{margin:0;padding:0;box-sizing:border-box}
 body{
-  margin:0;
   height:100vh;
-  background:radial-gradient(circle at top,#1b2735,#090a0f);
   overflow:hidden;
-  display:flex;
-  justify-content:center;
-  align-items:center;
+  font-family:'Poppins',sans-serif;
+  background:radial-gradient(circle at top,#1b2b5a,#02010a);
   color:white;
 }
 
-/* 💖 LOVE RAIN */
-.love{
+/* Aurora */
+body::before{
+  content:'';
   position:fixed;
-  top:-30px;
-  font-size:18px;
-  animation:fall linear infinite;
+  inset:0;
+  background:linear-gradient(120deg,rgba(0,255,200,.15),rgba(180,0,255,.1),rgba(0,100,255,.1));
+  animation:aurora 10s infinite alternate;
   pointer-events:none;
 }
-@keyframes fall{
-  to{transform:translate(-120px,110vh);opacity:0}
+@keyframes aurora{
+  0%{filter:blur(40px)}
+  100%{filter:blur(80px)}
 }
 
-/* 💞 RANDOM NAME FLOAT */
-.nameFloat{
-  position:fixed;
-  font-size:14px;
-  color:rgba(255,150,200,.45);
-  animation:floatName 6s ease-in-out forwards;
-  pointer-events:none;
-}
-@keyframes floatName{
-  from{opacity:0;transform:translateY(20px)}
-  to{opacity:1;transform:translateY(-40px)}
+.container{
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:20px;
+  position:relative;
 }
 
-/* 🎆 FIREWORK */
-.firework{
-  position:fixed;
-  font-size:24px;
-  animation:boom 1.2s ease-out forwards;
-  pointer-events:none;
-}
-@keyframes boom{
-  from{transform:scale(.3);opacity:1}
-  to{transform:scale(3);opacity:0}
+img,video{
+  max-width:80%;
+  border-radius:20px;
+  box-shadow:0 0 40px rgba(255,100,200,.4);
 }
 
-/* 💓 HEARTBEAT */
+.hidden{display:none}
+
+h1{
+  font-family:'Pacifico',cursive;
+  font-size:2.2rem;
+  margin:15px 0;
+}
+
+p{
+  font-size:1.1rem;
+  opacity:.9;
+}
+
+.buttons{
+  margin-top:20px;
+  display:flex;
+  gap:20px;
+}
+
+button{
+  padding:12px 26px;
+  font-size:1.2rem;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  transition:.3s;
+}
+
+#yes{
+  background:#ff4da6;
+  color:white;
+}
+
+#no{
+  background:#444;
+  color:white;
+}
+
+/* Heartbeat */
 .heartbeat{
-  animation:heartbeat 1s infinite;
+  animation:heartbeat 2.2s infinite;
+}
+.fast{
+  animation:heartbeat .8s infinite;
 }
 @keyframes heartbeat{
   0%{transform:scale(1)}
@@ -71,171 +101,153 @@ body{
   100%{transform:scale(1)}
 }
 
-.card{
-  background:rgba(255,255,255,.95);
-  color:#ff4d6d;
-  padding:24px;
-  border-radius:22px;
-  width:92vw;
-  max-width:360px;
-  text-align:center;
-  box-shadow:0 20px 40px rgba(0,0,0,.5);
-  z-index:10;
+/* Floating text */
+.floating{
+  position:absolute;
+  font-size:1.1rem;
+  opacity:.8;
+  animation:float 12s linear infinite;
+  white-space:nowrap;
+}
+@keyframes float{
+  from{transform:translateY(100vh)}
+  to{transform:translateY(-120vh)}
 }
 
-img{
-  width:210px;
-  border-radius:16px;
-  margin-bottom:14px;
-  animation:fade 1s ease, float 3s ease-in-out infinite;
+/* Meteor love */
+.meteor{
+  position:fixed;
+  width:12px;
+  height:12px;
+  background:💖;
+  animation:meteor 2s linear infinite;
+}
+@keyframes meteor{
+  from{transform:translate(0,0);opacity:1}
+  to{transform:translate(-600px,600px);opacity:0}
 }
 
-.fadeZoom{
-  animation:fade 1s ease, kissZoom 6s ease-in-out forwards;
+/* Fireworks */
+.firework{
+  position:absolute;
+  width:6px;
+  height:6px;
+  background:pink;
+  animation:explode 1.5s ease-out forwards;
+}
+@keyframes explode{
+  to{
+    transform:translate(var(--x),var(--y));
+    opacity:0;
+  }
 }
 
-@keyframes fade{from{opacity:0}to{opacity:1}}
-@keyframes float{50%{transform:translateY(-12px)}}
-@keyframes kissZoom{from{transform:scale(1)}to{transform:scale(1.15)}}
-
-button{
-  border:none;
-  padding:12px 26px;
-  border-radius:30px;
-  font-size:16px;
-  cursor:pointer;
-  margin:8px;
+/* Zoom kiss */
+.zoom{
+  animation:zoom 6s forwards;
 }
-#yes{background:#ff4d6d;color:white}
-#no{background:#ccc}
+@keyframes zoom{
+  from{transform:scale(1)}
+  to{transform:scale(1.15)}
+}
 </style>
 </head>
 
 <body>
 
-<audio id="music" src="glue-song.mp3.mp3" loop></audio>
+<audio id="music" src="gluesong.mp3"></audio>
 
-<div class="card heartbeat" id="card">
-  <img id="img" src="hug.gif.gif">
-  <h3 id="text">
-    Halo my bini 💖<br>
-    Happy Valentine's Day my bini
-  </h3>
-  <button id="yes">YES 💘</button>
-  <button id="no">NO 😳</button>
+<div class="container heartbeat" id="screen">
+
+<img id="media" src="hug.gif.gif">
+
+<h1 id="title">Halo my bini 💖</h1>
+<p id="text">Happy Valentine’s Day my bini 🥰</p>
+
+<div class="buttons">
+  <button id="yes">YES 💕</button>
+  <button id="no">NO 🙈</button>
+</div>
 </div>
 
 <script>
-const img=document.getElementById("img");
-const text=document.getElementById("text");
-const yes=document.getElementById("yes");
-const no=document.getElementById("no");
-const music=document.getElementById("music");
-const card=document.getElementById("card");
+const yes=document.getElementById('yes');
+const no=document.getElementById('no');
+const music=document.getElementById('music');
+const media=document.getElementById('media');
+const title=document.getElementById('title');
+const text=document.getElementById('text');
+const screen=document.getElementById('screen');
 
-let slideIndex=0;
-let slideInterval;
-let scale=1;
+let noScale=1, yesScale=1;
+let step=0;
 
-/* 📸 SLIDE + TEKS */
 const slides=[
-  {src:"bini.jpg.jpeg", text:"Aku suka senyum kamu di foto ini 💕"},
-  {src:"foto2.jpg.jpeg", text:"Di mana ada kamu, di situ aku tenang 🤍"},
-  {src:"foto3.jpg.jpeg", text:"Kalau sama kamu, waktu cepet banget 😚"},
-  {src:"kiss.gif.gif", text:"Sini… kiss dulu 💋"}
+ {img:'bini.jpg.jpeg',t:'Aku sayang kamu 💕'},
+ {img:'foto2.jpg.jpeg',t:'Kamu rumah paling nyaman 🏡'},
+ {img:'foto3.jpg.jpeg',t:'Selamanya ya kita 🤍'},
+ {img:'kiss.gif.gif',t:'MWAHHHH 😘'}
 ];
 
-function startSlide(){
-  slideInterval=setInterval(()=>{
-    slideIndex++;
-    if(slideIndex>=slides.length){
-      clearInterval(slideInterval);
-      setTimeout(ending,2000);
-      return;
-    }
-    img.classList.remove("fadeZoom");
-    img.src=slides[slideIndex].src;
-    text.innerHTML=slides[slideIndex].text;
-
-    if(slides[slideIndex].src.includes("kiss")){
-      img.classList.add("fadeZoom");
-    }
-  },3500);
+no.onclick=()=>{
+ noScale-=.15;
+ yesScale+=.15;
+ no.style.transform=`scale(${noScale})`;
+ yes.style.transform=`scale(${yesScale})`;
+ if(noScale<=0) no.style.display='none';
 }
 
 yes.onclick=()=>{
+ if(step===0){
   music.play();
-  card.classList.add("heartbeat"); // 💓 sync feel
-  img.src=slides[0].src;
-  text.innerHTML=slides[0].text;
-  startSlide();
-};
-
-no.onclick=()=>{
-  scale-=0.1;
-  no.style.transform=`scale(${scale})`;
-  yes.style.transform=`scale(${1+(1-scale)})`;
-  text.innerHTML="Hehe 😳 tapi aku tetap nunggu YES 💗";
-};
-
-/* 💖 LOVE RAIN */
-setInterval(()=>{
-  const l=document.createElement("div");
-  l.className="love";
-  l.innerText="💖";
-  l.style.left=Math.random()*100+"%";
-  l.style.animationDuration=2+Math.random()*3+"s";
-  document.body.appendChild(l);
-  setTimeout(()=>l.remove(),5000);
-},220);
-
-/* 💞 RANDOM NAME FLOAT */
-setInterval(()=>{
-  const n=document.createElement("div");
-  n.className="nameFloat";
-  n.innerText="Kevin❤️🥰💝😍💓Erin";
-  n.style.left=Math.random()*90+"%";
-  n.style.top=20+Math.random()*60+"%";
-  document.body.appendChild(n);
-  setTimeout(()=>n.remove(),6000);
-},1800);
-
-/* 🎆 ENDING */
-function ending(){
-  fireworks();
-  document.body.innerHTML=`
-    <div style="
-      height:100vh;
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      background:radial-gradient(circle,#ff5e8a,#ff2d6f);
-      color:white;
-      text-align:center;">
-      <h1>I LOVE YOU 💖</h1>
-      <img src="hug.gif.gif" width="260">
-      <p>Pelukan online dulu 🤗</p>
-    </div>
-  `;
+  nextSlide();
+ } else {
+  nextSlide();
+ }
 }
 
-/* 🎆 FIREWORK */
-function fireworks(){
-  for(let i=0;i<30;i++){
-    const f=document.createElement("div");
-    f.className="firework";
-    f.innerText="💖";
-    f.style.left=50+Math.random()*20-10+"%";
-    f.style.top=40+Math.random()*20-10+"%";
-    document.body.appendChild(f);
-    setTimeout(()=>f.remove(),1200);
+function nextSlide(){
+ step++;
+ if(step<=slides.length){
+  media.src=slides[step-1].img;
+  title.innerText='Kevin ❤️ Erin';
+  text.innerText=slides[step-1].t;
+
+  if(slides[step-1].img.includes('kiss')){
+    media.classList.add('zoom');
+    screen.classList.add('fast');
+    fireworks();
   }
+ } else {
+  yes.style.display='none';
+ }
+}
+
+function fireworks(){
+ for(let i=0;i<40;i++){
+  const f=document.createElement('div');
+  f.className='firework';
+  f.style.left='50%';
+  f.style.top='50%';
+  f.style.setProperty('--x',`${Math.random()*400-200}px`);
+  f.style.setProperty('--y',`${Math.random()*400-200}px`);
+  document.body.appendChild(f);
+  setTimeout(()=>f.remove(),1500);
+ }
+}
+
+/* Random floating text */
+for(let i=0;i<25;i++){
+ const t=document.createElement('div');
+ t.className='floating';
+ t.style.left=Math.random()*100+'%';
+ t.style.animationDuration=10+Math.random()*10+'s';
+ t.innerText='Kevin❤️🥰💝😍💓Erin';
+ document.body.appendChild(t);
 }
 </script>
 
 </body>
 </html>
-
 
 
