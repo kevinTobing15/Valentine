@@ -6,7 +6,11 @@
 <title>Valentine 💖</title>
 
 <style>
-*{font-family:"Comic Sans MS",cursive;box-sizing:border-box}
+*{
+  font-family:"Comic Sans MS",cursive;
+  box-sizing:border-box;
+}
+
 body{
   margin:0;
   height:100vh;
@@ -18,14 +22,14 @@ body{
   color:white;
 }
 
-/* 🌠 HUJAN METEOR LOVE */
+/* 💖 HUJAN LOVE */
 .love{
   position:fixed;
   top:-30px;
   font-size:18px;
-  animation:meteor linear infinite;
+  animation:fall linear infinite;
 }
-@keyframes meteor{
+@keyframes fall{
   to{
     transform:translate(-120px,110vh);
     opacity:0;
@@ -52,19 +56,21 @@ body{
   max-width:360px;
   text-align:center;
   box-shadow:0 20px 40px rgba(0,0,0,.5);
-  animation:pop .8s ease;
-}
-@keyframes pop{
-  from{transform:scale(.6);opacity:0}
-  to{transform:scale(1);opacity:1}
+  z-index:10;
 }
 
 img{
-  width:200px;
+  width:210px;
   border-radius:16px;
   margin-bottom:14px;
-  animation:float 3s ease-in-out infinite;
+  animation:fade 1s ease, float 3s ease-in-out infinite;
 }
+
+@keyframes fade{
+  from{opacity:0}
+  to{opacity:1}
+}
+
 @keyframes float{
   50%{transform:translateY(-12px)}
 }
@@ -77,8 +83,15 @@ button{
   cursor:pointer;
   margin:8px;
 }
-#yes{background:#ff4d6d;color:white}
-#no{background:#ccc}
+
+#yes{
+  background:#ff4d6d;
+  color:white;
+}
+
+#no{
+  background:#ccc;
+}
 </style>
 </head>
 
@@ -86,7 +99,7 @@ button{
 
 <audio id="music" src="glue-song.mp3.mp3" loop></audio>
 
-<div class="card" id="card">
+<div class="card">
   <img id="img" src="hug.gif.gif">
   <h3 id="text">
     Halo my bini 💖<br>
@@ -97,33 +110,53 @@ button{
 </div>
 
 <script>
-const img=document.getElementById("img");
-const text=document.getElementById("text");
-const yes=document.getElementById("yes");
-const no=document.getElementById("no");
-const music=document.getElementById("music");
+const img = document.getElementById("img");
+const text = document.getElementById("text");
+const yes = document.getElementById("yes");
+const no = document.getElementById("no");
+const music = document.getElementById("music");
 
-let step=0;
-let scale=1;
+let step = 0;
+let scale = 1;
+let slideIndex = 0;
+let slideInterval;
 
-const sweet=[
+/* 📸 SLIDE FOTO (SESUAI FILE KAMU) */
+const photos = [
+  "bini.jpg.jpeg",
+  "foto2.jpg.jpeg",
+  "foto3.jpg.jpeg"
+];
+
+const sweetText = [
   "Aku tau kamu bakal pilih YES 😘",
-  "Makasih ya udah ada buat aku 💞",
+  "Setiap foto ini isinya kamu semua 💞",
   "Aku sayang kamu hari ini, besok, selamanya 💖"
 ];
 
-yes.onclick=()=>{
-  if(step===0){
+function startSlide(){
+  slideInterval = setInterval(()=>{
+    slideIndex = (slideIndex + 1) % photos.length;
+    img.src = photos[slideIndex];
+  }, 2500);
+}
+
+yes.onclick = () => {
+  if(step === 0){
     music.play();
-    img.src="bini.jpg.jpeg";
-    text.innerHTML=sweet[0];
+    img.src = photos[0];
+    startSlide();
+    text.innerHTML = sweetText[0];
     step++;
-  }else if(step<sweet.length){
-    text.innerHTML=sweet[step];
+  }
+  else if(step < sweetText.length){
+    text.innerHTML = sweetText[step];
     step++;
-  }else{
+  }
+  else{
+    clearInterval(slideInterval);
     fireworks();
-    document.body.innerHTML=`
+    document.body.innerHTML = `
       <div style="
         height:100vh;
         display:flex;
@@ -141,21 +174,21 @@ yes.onclick=()=>{
   }
 };
 
-no.onclick=()=>{
-  scale-=0.1;
-  no.style.transform=`scale(${scale})`;
-  yes.style.transform=`scale(${1+(1-scale)})`;
-  img.src="bini.jpg.jpeg";
-  text.innerHTML="Hehe 😳 tapi aku tetap nunggu YES 💗";
+no.onclick = () => {
+  scale -= 0.1;
+  no.style.transform = "scale(" + scale + ")";
+  yes.style.transform = "scale(" + (1 + (1-scale)) + ")";
+  img.src = photos[0];
+  text.innerHTML = "Hehe 😳 tapi aku tetap nunggu YES 💗";
 };
 
-/* 💖 HUJAN METEOR */
+/* 💖 HUJAN LOVE */
 setInterval(()=>{
-  const l=document.createElement("div");
-  l.className="love";
-  l.innerText="💖";
-  l.style.left=Math.random()*100+"%";
-  l.style.animationDuration=2+Math.random()*3+"s";
+  const l = document.createElement("div");
+  l.className = "love";
+  l.innerText = "💖";
+  l.style.left = Math.random()*100 + "%";
+  l.style.animationDuration = (2 + Math.random()*3) + "s";
   document.body.appendChild(l);
   setTimeout(()=>l.remove(),5000);
 },220);
@@ -166,8 +199,8 @@ function fireworks(){
     const f=document.createElement("div");
     f.className="firework";
     f.innerText="💖";
-    f.style.left=50+Math.random()*20-10+"%";
-    f.style.top=40+Math.random()*20-10+"%";
+    f.style.left=50 + Math.random()*20 - 10 + "%";
+    f.style.top=40 + Math.random()*20 - 10 + "%";
     document.body.appendChild(f);
     setTimeout(()=>f.remove(),1200);
   }
@@ -176,3 +209,5 @@ function fireworks(){
 
 </body>
 </html>
+
+
