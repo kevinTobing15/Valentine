@@ -2,86 +2,109 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Will You Be My Valentine? 💘</title>
+  <title>Valentine 💖</title>
   <style>
     body {
-      background: pink;
-      font-family: 'Comic Sans MS', cursive;
+      margin: 0;
+      font-family: "Comic Sans MS", cursive;
+      background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    .card {
+      background: white;
+      border-radius: 20px;
+      padding: 30px;
       text-align: center;
-      padding-top: 50px;
+      width: 320px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      animation: pop 0.8s ease;
+    }
+
+    @keyframes pop {
+      0% { transform: scale(0); }
+      100% { transform: scale(1); }
     }
 
     img {
-      width: 220px;
-      border-radius: 20px;
-      margin-bottom: 20px;
+      width: 200px;
+      border-radius: 15px;
+      margin-bottom: 15px;
+      animation: float 3s ease-in-out infinite;
     }
 
-    h1 {
-      font-size: 36px;
-      color: #d1006c;
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    h2 {
+      color: #ff4d6d;
     }
 
     button {
-      font-size: 20px;
-      padding: 10px 25px;
-      margin: 10px;
-      border-radius: 12px;
       border: none;
+      padding: 12px 25px;
+      border-radius: 30px;
+      font-size: 16px;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: 0.3s;
+      margin: 10px;
     }
 
     #yes {
-      background: #ff4d88;
+      background: #ff4d6d;
       color: white;
     }
 
     #no {
-      background: #aaa;
+      background: #ccc;
     }
   </style>
 </head>
 <body>
 
-  <img src="bini.jpg" alt="cute couple">
-
-  <h1 id="text">Will you be my Valentine? 💕</h1>
-
+<div class="card">
+  <img id="photo" src="bini.jpg.jpeg" alt="bini">
+  <h2 id="text">Maukah kamu jadi Valentine-ku? 💘</h2>
   <button id="yes">YES 💖</button>
-  <button id="no">NO 😢</button>
+  <button id="no">NO 😳</button>
+</div>
 
-  <audio id="music" loop>
-    <source src="glue-song.mp3" type="audio/mpeg">
-  </audio>
+<audio id="music" src="glue-song.mp3.mp3" loop></audio>
 
-  <script>
-    const yes = document.getElementById("yes");
-    const no = document.getElementById("no");
-    const text = document.getElementById("text");
-    const music = document.getElementById("music");
+<script>
+  const yes = document.getElementById("yes");
+  const no = document.getElementById("no");
+  const text = document.getElementById("text");
+  const music = document.getElementById("music");
 
-    let scale = 1;
+  let scale = 1;
 
-    yes.onclick = () => {
-      text.innerHTML = "YAYYY!! I LOVE YOU 💞🤗";
-      music.play();
+  no.addEventListener("click", () => {
+    scale -= 0.1;
+    no.style.transform = `scale(${scale})`;
+    yes.style.transform = `scale(${1 + (1 - scale)})`;
+  });
 
-      document.body.innerHTML += `
-        <br><br>
-        <img src="https://media.giphy.com/media/l4FGpPki5v2Bcd6Ss/giphy.gif" width="250">
-      `;
-    };
+  yes.addEventListener("click", () => {
+    text.innerHTML = "YEAYYYY 💕 AKU SAYANG KAMU 😘<br><br>🤗🤗🤗";
+    music.play();
+    document.getElementById("photo").src =
+      "https://media.giphy.com/media/l4FGuhL4U2WyjdkaY/giphy.gif";
+  });
 
-    no.onclick = () => {
-      scale += 0.2;
-      yes.style.transform = `scale(${scale})`;
-      no.style.transform = "scale(0.8)";
-    };
-  </script>
+  // supaya lagu bisa diputar (aturan browser)
+  document.body.addEventListener("click", () => {
+    music.play().catch(()=>{});
+  }, { once: true });
+</script>
 
 </body>
 </html>
-
 
 
