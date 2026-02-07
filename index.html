@@ -1,110 +1,178 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <title>Valentine 💖</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: "Comic Sans MS", cursive;
-      background: linear-gradient(135deg, #ffb6c1, #ffc0cb);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      overflow: hidden;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Valentine 💖</title>
 
-    .card {
-      background: white;
-      border-radius: 20px;
-      padding: 30px;
-      text-align: center;
-      width: 320px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-      animation: pop 0.8s ease;
-    }
+<style>
+*{font-family:"Comic Sans MS",cursive;box-sizing:border-box}
+body{
+  margin:0;
+  height:100vh;
+  background:radial-gradient(circle at top,#1b2735,#090a0f);
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:white;
+}
 
-    @keyframes pop {
-      0% { transform: scale(0); }
-      100% { transform: scale(1); }
-    }
+/* 🌠 HUJAN METEOR LOVE */
+.love{
+  position:fixed;
+  top:-30px;
+  font-size:18px;
+  animation:meteor linear infinite;
+}
+@keyframes meteor{
+  to{
+    transform:translate(-120px,110vh);
+    opacity:0;
+  }
+}
 
-    img {
-      width: 200px;
-      border-radius: 15px;
-      margin-bottom: 15px;
-      animation: float 3s ease-in-out infinite;
-    }
+/* 🎆 FIREWORK LOVE */
+.firework{
+  position:fixed;
+  font-size:24px;
+  animation:boom 1.2s ease-out forwards;
+}
+@keyframes boom{
+  from{transform:scale(.3);opacity:1}
+  to{transform:scale(3);opacity:0}
+}
 
-    @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
+.card{
+  background:rgba(255,255,255,.95);
+  color:#ff4d6d;
+  padding:24px;
+  border-radius:22px;
+  width:92vw;
+  max-width:360px;
+  text-align:center;
+  box-shadow:0 20px 40px rgba(0,0,0,.5);
+  animation:pop .8s ease;
+}
+@keyframes pop{
+  from{transform:scale(.6);opacity:0}
+  to{transform:scale(1);opacity:1}
+}
 
-    h2 {
-      color: #ff4d6d;
-    }
+img{
+  width:200px;
+  border-radius:16px;
+  margin-bottom:14px;
+  animation:float 3s ease-in-out infinite;
+}
+@keyframes float{
+  50%{transform:translateY(-12px)}
+}
 
-    button {
-      border: none;
-      padding: 12px 25px;
-      border-radius: 30px;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s;
-      margin: 10px;
-    }
-
-    #yes {
-      background: #ff4d6d;
-      color: white;
-    }
-
-    #no {
-      background: #ccc;
-    }
-  </style>
+button{
+  border:none;
+  padding:12px 26px;
+  border-radius:30px;
+  font-size:16px;
+  cursor:pointer;
+  margin:8px;
+}
+#yes{background:#ff4d6d;color:white}
+#no{background:#ccc}
+</style>
 </head>
-<body>
 
-<div class="card">
-  <img id="photo" src="bini.jpg.jpeg" alt="bini">
-  <h2 id="text">Maukah kamu jadi Valentine-ku? 💘</h2>
-  <button id="yes">YES 💖</button>
-  <button id="no">NO 😳</button>
-</div>
+<body>
 
 <audio id="music" src="glue-song.mp3.mp3" loop></audio>
 
+<div class="card" id="card">
+  <img id="img" src="hug.gif.gif">
+  <h3 id="text">
+    Halo my bini 💖<br>
+    Happy Valentine's Day my bini
+  </h3>
+  <button id="yes">YES 💘</button>
+  <button id="no">NO 😳</button>
+</div>
+
 <script>
-  const yes = document.getElementById("yes");
-  const no = document.getElementById("no");
-  const text = document.getElementById("text");
-  const music = document.getElementById("music");
+const img=document.getElementById("img");
+const text=document.getElementById("text");
+const yes=document.getElementById("yes");
+const no=document.getElementById("no");
+const music=document.getElementById("music");
 
-  let scale = 1;
+let step=0;
+let scale=1;
 
-  no.addEventListener("click", () => {
-    scale -= 0.1;
-    no.style.transform = `scale(${scale})`;
-    yes.style.transform = `scale(${1 + (1 - scale)})`;
-  });
+const sweet=[
+  "Aku tau kamu bakal pilih YES 😘",
+  "Makasih ya udah ada buat aku 💞",
+  "Aku sayang kamu hari ini, besok, selamanya 💖"
+];
 
-  yes.addEventListener("click", () => {
-    text.innerHTML = "YEAYYYY 💕 AKU SAYANG KAMU 😘<br><br>🤗🤗🤗";
+yes.onclick=()=>{
+  if(step===0){
     music.play();
-    document.getElementById("photo").src =
-      "https://media.giphy.com/media/l4FGuhL4U2WyjdkaY/giphy.gif";
-  });
+    img.src="bini.jpg.jpeg";
+    text.innerHTML=sweet[0];
+    step++;
+  }else if(step<sweet.length){
+    text.innerHTML=sweet[step];
+    step++;
+  }else{
+    fireworks();
+    document.body.innerHTML=`
+      <div style="
+        height:100vh;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        background:radial-gradient(circle,#ff5e8a,#ff2d6f);
+        color:white;
+        text-align:center;">
+        <h1>I LOVE YOU 💖</h1>
+        <img src="hug.gif.gif" width="260">
+        <p>Pelukan online dulu 🤗</p>
+      </div>
+    `;
+  }
+};
 
-  // supaya lagu bisa diputar (aturan browser)
-  document.body.addEventListener("click", () => {
-    music.play().catch(()=>{});
-  }, { once: true });
+no.onclick=()=>{
+  scale-=0.1;
+  no.style.transform=`scale(${scale})`;
+  yes.style.transform=`scale(${1+(1-scale)})`;
+  img.src="bini.jpg.jpeg";
+  text.innerHTML="Hehe 😳 tapi aku tetap nunggu YES 💗";
+};
+
+/* 💖 HUJAN METEOR */
+setInterval(()=>{
+  const l=document.createElement("div");
+  l.className="love";
+  l.innerText="💖";
+  l.style.left=Math.random()*100+"%";
+  l.style.animationDuration=2+Math.random()*3+"s";
+  document.body.appendChild(l);
+  setTimeout(()=>l.remove(),5000);
+},220);
+
+/* 🎆 FIREWORK LOVE */
+function fireworks(){
+  for(let i=0;i<30;i++){
+    const f=document.createElement("div");
+    f.className="firework";
+    f.innerText="💖";
+    f.style.left=50+Math.random()*20-10+"%";
+    f.style.top=40+Math.random()*20-10+"%";
+    document.body.appendChild(f);
+    setTimeout(()=>f.remove(),1200);
+  }
+}
 </script>
 
 </body>
 </html>
-
-
