@@ -36,7 +36,7 @@ body{
   }
 }
 
-/* 🎆 FIREWORK LOVE */
+/* 🎆 FIREWORK */
 .firework{
   position:fixed;
   font-size:24px;
@@ -66,6 +66,10 @@ img{
   animation:fade 1s ease, float 3s ease-in-out infinite;
 }
 
+.fadeZoom{
+  animation:fade 1s ease, kissZoom 6s ease-in-out forwards;
+}
+
 @keyframes fade{
   from{opacity:0}
   to{opacity:1}
@@ -73,6 +77,12 @@ img{
 
 @keyframes float{
   50%{transform:translateY(-12px)}
+}
+
+/* 💋 ZOOM PELAN KISS */
+@keyframes kissZoom{
+  from{transform:scale(1)}
+  to{transform:scale(1.15)}
 }
 
 button{
@@ -83,15 +93,8 @@ button{
   cursor:pointer;
   margin:8px;
 }
-
-#yes{
-  background:#ff4d6d;
-  color:white;
-}
-
-#no{
-  background:#ccc;
-}
+#yes{background:#ff4d6d;color:white}
+#no{background:#ccc}
 </style>
 </head>
 
@@ -121,86 +124,90 @@ let scale = 1;
 let slideIndex = 0;
 let slideInterval;
 
-/* 📸 SLIDE FOTO (SESUAI FILE KAMU) */
-const photos = [
-  "bini.jpg.jpeg",
-  "foto2.jpg.jpeg",
-  "foto3.jpg.jpeg"
-];
-
-const sweetText = [
-  "Aku tau kamu bakal pilih YES 😘",
-  "Setiap foto ini isinya kamu semua 💞",
-  "Aku sayang kamu hari ini, besok, selamanya 💖"
+/* 📸 FOTO + GIF TERAKHIR */
+const slides = [
+  {src:"bini.jpg.jpeg", text:"Aku suka senyum kamu di foto ini 💕"},
+  {src:"foto2.jpg.jpeg", text:"Di mana ada kamu, di situ aku tenang 🤍"},
+  {src:"foto3.jpg.jpeg", text:"Kalau sama kamu, waktu cepet banget 😚"},
+  {src:"kiss.gif.gif", text:"Sini… kiss dulu 💋"}
 ];
 
 function startSlide(){
   slideInterval = setInterval(()=>{
-    slideIndex = (slideIndex + 1) % photos.length;
-    img.src = photos[slideIndex];
-  }, 2500);
+    slideIndex++;
+    if(slideIndex >= slides.length){
+      clearInterval(slideInterval);
+      setTimeout(ending, 2000);
+      return;
+    }
+
+    img.classList.remove("fadeZoom");
+    img.src = slides[slideIndex].src;
+    text.innerHTML = slides[slideIndex].text;
+
+    /* 💋 KISS EFFECT */
+    if(slides[slideIndex].src.includes("kiss")){
+      img.classList.add("fadeZoom");
+    }
+  }, 3500);
 }
 
-yes.onclick = () => {
+yes.onclick = ()=>{
   if(step === 0){
     music.play();
-    img.src = photos[0];
+    img.src = slides[0].src;
+    text.innerHTML = slides[0].text;
     startSlide();
-    text.innerHTML = sweetText[0];
     step++;
-  }
-  else if(step < sweetText.length){
-    text.innerHTML = sweetText[step];
-    step++;
-  }
-  else{
-    clearInterval(slideInterval);
-    fireworks();
-    document.body.innerHTML = `
-      <div style="
-        height:100vh;
-        display:flex;
-        flex-direction:column;
-        justify-content:center;
-        align-items:center;
-        background:radial-gradient(circle,#ff5e8a,#ff2d6f);
-        color:white;
-        text-align:center;">
-        <h1>I LOVE YOU 💖</h1>
-        <img src="hug.gif.gif" width="260">
-        <p>Pelukan online dulu 🤗</p>
-      </div>
-    `;
   }
 };
 
-no.onclick = () => {
+no.onclick = ()=>{
   scale -= 0.1;
-  no.style.transform = "scale(" + scale + ")";
-  yes.style.transform = "scale(" + (1 + (1-scale)) + ")";
-  img.src = photos[0];
+  no.style.transform = `scale(${scale})`;
+  yes.style.transform = `scale(${1+(1-scale)})`;
   text.innerHTML = "Hehe 😳 tapi aku tetap nunggu YES 💗";
 };
 
+/* 🎆 ENDING */
+function ending(){
+  fireworks();
+  document.body.innerHTML = `
+    <div style="
+      height:100vh;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+      background:radial-gradient(circle,#ff5e8a,#ff2d6f);
+      color:white;
+      text-align:center;">
+      <h1>I LOVE YOU 💖</h1>
+      <img src="hug.gif.gif" width="260">
+      <p>Pelukan online dulu 🤗</p>
+    </div>
+  `;
+}
+
 /* 💖 HUJAN LOVE */
 setInterval(()=>{
-  const l = document.createElement("div");
-  l.className = "love";
-  l.innerText = "💖";
-  l.style.left = Math.random()*100 + "%";
-  l.style.animationDuration = (2 + Math.random()*3) + "s";
+  const l=document.createElement("div");
+  l.className="love";
+  l.innerText="💖";
+  l.style.left=Math.random()*100+"%";
+  l.style.animationDuration=2+Math.random()*3+"s";
   document.body.appendChild(l);
   setTimeout(()=>l.remove(),5000);
 },220);
 
-/* 🎆 FIREWORK LOVE */
+/* 🎆 FIREWORK */
 function fireworks(){
   for(let i=0;i<30;i++){
     const f=document.createElement("div");
     f.className="firework";
     f.innerText="💖";
-    f.style.left=50 + Math.random()*20 - 10 + "%";
-    f.style.top=40 + Math.random()*20 - 10 + "%";
+    f.style.left=50+Math.random()*20-10+"%";
+    f.style.top=40+Math.random()*20-10+"%";
     document.body.appendChild(f);
     setTimeout(()=>f.remove(),1200);
   }
@@ -209,5 +216,4 @@ function fireworks(){
 
 </body>
 </html>
-
 
