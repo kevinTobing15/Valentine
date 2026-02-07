@@ -22,18 +22,29 @@ body{
   color:white;
 }
 
-/* 💖 HUJAN LOVE */
+/* 💖 LOVE RAIN */
 .love{
   position:fixed;
   top:-30px;
   font-size:18px;
   animation:fall linear infinite;
+  pointer-events:none;
 }
 @keyframes fall{
-  to{
-    transform:translate(-120px,110vh);
-    opacity:0;
-  }
+  to{transform:translate(-120px,110vh);opacity:0}
+}
+
+/* 💞 RANDOM NAME FLOAT */
+.nameFloat{
+  position:fixed;
+  font-size:14px;
+  color:rgba(255,150,200,.45);
+  animation:floatName 6s ease-in-out forwards;
+  pointer-events:none;
+}
+@keyframes floatName{
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(-40px)}
 }
 
 /* 🎆 FIREWORK */
@@ -41,10 +52,23 @@ body{
   position:fixed;
   font-size:24px;
   animation:boom 1.2s ease-out forwards;
+  pointer-events:none;
 }
 @keyframes boom{
   from{transform:scale(.3);opacity:1}
   to{transform:scale(3);opacity:0}
+}
+
+/* 💓 HEARTBEAT */
+.heartbeat{
+  animation:heartbeat 1s infinite;
+}
+@keyframes heartbeat{
+  0%{transform:scale(1)}
+  25%{transform:scale(1.05)}
+  50%{transform:scale(1)}
+  75%{transform:scale(1.08)}
+  100%{transform:scale(1)}
 }
 
 .card{
@@ -70,20 +94,9 @@ img{
   animation:fade 1s ease, kissZoom 6s ease-in-out forwards;
 }
 
-@keyframes fade{
-  from{opacity:0}
-  to{opacity:1}
-}
-
-@keyframes float{
-  50%{transform:translateY(-12px)}
-}
-
-/* 💋 ZOOM PELAN KISS */
-@keyframes kissZoom{
-  from{transform:scale(1)}
-  to{transform:scale(1.15)}
-}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes float{50%{transform:translateY(-12px)}}
+@keyframes kissZoom{from{transform:scale(1)}to{transform:scale(1.15)}}
 
 button{
   border:none;
@@ -102,7 +115,7 @@ button{
 
 <audio id="music" src="glue-song.mp3.mp3" loop></audio>
 
-<div class="card">
+<div class="card heartbeat" id="card">
   <img id="img" src="hug.gif.gif">
   <h3 id="text">
     Halo my bini 💖<br>
@@ -113,19 +126,19 @@ button{
 </div>
 
 <script>
-const img = document.getElementById("img");
-const text = document.getElementById("text");
-const yes = document.getElementById("yes");
-const no = document.getElementById("no");
-const music = document.getElementById("music");
+const img=document.getElementById("img");
+const text=document.getElementById("text");
+const yes=document.getElementById("yes");
+const no=document.getElementById("no");
+const music=document.getElementById("music");
+const card=document.getElementById("card");
 
-let step = 0;
-let scale = 1;
-let slideIndex = 0;
+let slideIndex=0;
 let slideInterval;
+let scale=1;
 
-/* 📸 FOTO + GIF TERAKHIR */
-const slides = [
+/* 📸 SLIDE + TEKS */
+const slides=[
   {src:"bini.jpg.jpeg", text:"Aku suka senyum kamu di foto ini 💕"},
   {src:"foto2.jpg.jpeg", text:"Di mana ada kamu, di situ aku tenang 🤍"},
   {src:"foto3.jpg.jpeg", text:"Kalau sama kamu, waktu cepet banget 😚"},
@@ -133,46 +146,64 @@ const slides = [
 ];
 
 function startSlide(){
-  slideInterval = setInterval(()=>{
+  slideInterval=setInterval(()=>{
     slideIndex++;
-    if(slideIndex >= slides.length){
+    if(slideIndex>=slides.length){
       clearInterval(slideInterval);
-      setTimeout(ending, 2000);
+      setTimeout(ending,2000);
       return;
     }
-
     img.classList.remove("fadeZoom");
-    img.src = slides[slideIndex].src;
-    text.innerHTML = slides[slideIndex].text;
+    img.src=slides[slideIndex].src;
+    text.innerHTML=slides[slideIndex].text;
 
-    /* 💋 KISS EFFECT */
     if(slides[slideIndex].src.includes("kiss")){
       img.classList.add("fadeZoom");
     }
-  }, 3500);
+  },3500);
 }
 
-yes.onclick = ()=>{
-  if(step === 0){
-    music.play();
-    img.src = slides[0].src;
-    text.innerHTML = slides[0].text;
-    startSlide();
-    step++;
-  }
+yes.onclick=()=>{
+  music.play();
+  card.classList.add("heartbeat"); // 💓 sync feel
+  img.src=slides[0].src;
+  text.innerHTML=slides[0].text;
+  startSlide();
 };
 
-no.onclick = ()=>{
-  scale -= 0.1;
-  no.style.transform = `scale(${scale})`;
-  yes.style.transform = `scale(${1+(1-scale)})`;
-  text.innerHTML = "Hehe 😳 tapi aku tetap nunggu YES 💗";
+no.onclick=()=>{
+  scale-=0.1;
+  no.style.transform=`scale(${scale})`;
+  yes.style.transform=`scale(${1+(1-scale)})`;
+  text.innerHTML="Hehe 😳 tapi aku tetap nunggu YES 💗";
 };
+
+/* 💖 LOVE RAIN */
+setInterval(()=>{
+  const l=document.createElement("div");
+  l.className="love";
+  l.innerText="💖";
+  l.style.left=Math.random()*100+"%";
+  l.style.animationDuration=2+Math.random()*3+"s";
+  document.body.appendChild(l);
+  setTimeout(()=>l.remove(),5000);
+},220);
+
+/* 💞 RANDOM NAME FLOAT */
+setInterval(()=>{
+  const n=document.createElement("div");
+  n.className="nameFloat";
+  n.innerText="Kevin❤️🥰💝😍💓Erin";
+  n.style.left=Math.random()*90+"%";
+  n.style.top=20+Math.random()*60+"%";
+  document.body.appendChild(n);
+  setTimeout(()=>n.remove(),6000);
+},1800);
 
 /* 🎆 ENDING */
 function ending(){
   fireworks();
-  document.body.innerHTML = `
+  document.body.innerHTML=`
     <div style="
       height:100vh;
       display:flex;
@@ -188,17 +219,6 @@ function ending(){
     </div>
   `;
 }
-
-/* 💖 HUJAN LOVE */
-setInterval(()=>{
-  const l=document.createElement("div");
-  l.className="love";
-  l.innerText="💖";
-  l.style.left=Math.random()*100+"%";
-  l.style.animationDuration=2+Math.random()*3+"s";
-  document.body.appendChild(l);
-  setTimeout(()=>l.remove(),5000);
-},220);
 
 /* 🎆 FIREWORK */
 function fireworks(){
@@ -216,4 +236,6 @@ function fireworks(){
 
 </body>
 </html>
+
+
 
