@@ -9,6 +9,7 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+
 body{
   height:100vh;
   overflow:hidden;
@@ -17,12 +18,11 @@ body{
   color:white;
 }
 
-/* Aurora */
 body::before{
   content:'';
   position:fixed;
   inset:0;
-  background:linear-gradient(120deg,rgba(0,255,200,.15),rgba(180,0,255,.1),rgba(0,100,255,.1));
+  background:linear-gradient(120deg,rgba(0,255,200,.15),rgba(180,0,255,.1));
   animation:aurora 10s infinite alternate;
   pointer-events:none;
 }
@@ -36,76 +36,74 @@ body::before{
   display:flex;
   flex-direction:column;
   align-items:center;
-  justify-content:center;
-  text-align:center;
+  justify-content:space-between;
   padding:20px;
-  position:relative;
+  text-align:center;
+}
+
+.media-box{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 img{
-  max-width:80%;
+  max-width:90%;
+  max-height:45vh;     /* FIX UTAMA */
+  object-fit:contain;
   border-radius:20px;
-  box-shadow:0 0 40px rgba(255,100,200,.4);
+  box-shadow:0 0 30px rgba(255,100,200,.4);
+}
+
+.text-box{
+  margin-top:10px;
 }
 
 h1{
   font-family:'Pacifico',cursive;
-  font-size:2.2rem;
-  margin:15px 0;
+  font-size:2rem;
 }
 
 p{
-  font-size:1.1rem;
+  font-size:1.05rem;
   opacity:.9;
 }
 
 .buttons{
-  margin-top:20px;
+  margin:20px 0;
   display:flex;
   gap:20px;
 }
 
 button{
   padding:12px 26px;
-  font-size:1.2rem;
+  font-size:1.1rem;
   border:none;
   border-radius:30px;
   cursor:pointer;
   transition:.3s;
 }
 
-#yes{
-  background:#ff4da6;
-  color:white;
-}
-
-#no{
-  background:#444;
-  color:white;
-}
+#yes{background:#ff4da6;color:white}
+#no{background:#444;color:white}
 
 /* Heartbeat */
-.heartbeat{
-  animation:heartbeat 2.2s infinite;
-}
-.fast{
-  animation:heartbeat .9s infinite;
-}
+.heartbeat{animation:heartbeat 2.4s infinite}
+.fast{animation:heartbeat .9s infinite}
 @keyframes heartbeat{
   0%{transform:scale(1)}
-  25%{transform:scale(1.04)}
-  50%{transform:scale(1)}
-  75%{transform:scale(1.06)}
-  100%{transform:scale(1)}
+  30%{transform:scale(1.04)}
+  60%{transform:scale(1)}
+  100%{transform:scale(1.06)}
 }
 
 /* Floating text */
 .floating{
   position:absolute;
-  font-size:1.1rem;
-  opacity:.8;
-  animation:float 14s linear infinite;
-  white-space:nowrap;
+  font-size:1.05rem;
+  opacity:.75;
+  animation:float 15s linear infinite;
   pointer-events:none;
 }
 @keyframes float{
@@ -132,19 +130,23 @@ button{
 
 <body>
 
-<audio id="music" src="gluesong.mp3"></audio>
+<audio id="music" src="gluesong.mp3" preload="none"></audio>
 
 <div class="container heartbeat" id="screen">
 
-<img id="media" src="hug.gif.gif">
+  <div class="media-box">
+    <img id="media" src="hug.gif.gif">
+  </div>
 
-<h1 id="title">Halo my bini 💖</h1>
-<p id="text">Happy Valentine’s Day my bini 🥰</p>
+  <div class="text-box">
+    <h1 id="title">Halo my bini 💖</h1>
+    <p id="text">Happy Valentine’s Day my bini 🥰</p>
+  </div>
 
-<div class="buttons">
-  <button id="yes">YES 💕</button>
-  <button id="no">NO 🙈</button>
-</div>
+  <div class="buttons">
+    <button id="yes">YES 💕</button>
+    <button id="no">NO 🙈</button>
+  </div>
 
 </div>
 
@@ -159,6 +161,7 @@ const screen=document.getElementById('screen');
 
 let noScale=1, yesScale=1;
 let step=0;
+let musicStarted=false;
 
 const slides=[
  {img:'bini.jpg.jpeg',t:'Aku sayang kamu 💕'},
@@ -173,12 +176,15 @@ no.onclick=()=>{
  no.style.transform=`scale(${noScale})`;
  yes.style.transform=`scale(${yesScale})`;
  if(noScale<=0) no.style.display='none';
-}
+};
 
 yes.onclick=()=>{
- if(step===0) music.play();
+ if(!musicStarted){
+   music.play();
+   musicStarted=true;
+ }
  nextSlide();
-}
+};
 
 function nextSlide(){
  if(step<slides.length){
@@ -197,7 +203,7 @@ function nextSlide(){
 }
 
 function fireworks(){
- for(let i=0;i<36;i++){
+ for(let i=0;i<30;i++){
   const f=document.createElement('div');
   f.className='firework';
   f.style.left='50%';
@@ -209,12 +215,12 @@ function fireworks(){
  }
 }
 
-/* Floating romantic text */
+/* Floating text */
 for(let i=0;i<30;i++){
  const t=document.createElement('div');
  t.className='floating';
  t.style.left=Math.random()*100+'%';
- t.style.animationDuration=12+Math.random()*12+'s';
+ t.style.animationDuration=12+Math.random()*15+'s';
  t.innerText='Kevin❤️🥰💝😍💓Erin';
  document.body.appendChild(t);
 }
@@ -222,4 +228,5 @@ for(let i=0;i<30;i++){
 
 </body>
 </html>
+
 
